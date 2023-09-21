@@ -61,6 +61,9 @@ contract JointAccounts {
     modifier validOwners(address[] calldata owners) {
         require(owners.length <= 4, "Max for accounts allowed");
         for (uint256 index = 0; index < owners.length; index++) {
+            if(owners[index] == msg.sender){
+                 revert("Duplicate account not allowed");
+            }
             for (uint256 j = index + 1; j < owners.length; j++) {
                 if(owners[index] == owners[j]){
                     revert("Duplicate account not allowed");
